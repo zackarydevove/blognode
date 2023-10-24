@@ -11,13 +11,13 @@ export const followUser = async (req: Request<{}, {}, FollowUserRequest>, res: R
 	try {
 		const { user, target } = req.body;
 		if (!user.id) {
-			return res.sendStatus(401).json({ message: "You are not authorized" });
+			return res.status(401).json({ message: "You are not authorized" });
 		}
 
 		const targetUser = await prisma.user.findFirst({ where: { id: target }})
 
 		if (!targetUser) {
-			return res.sendStatus(404).json({ message: "Target user not found" });
+			return res.status(404).json({ message: "Target user not found" });
 		}
 
         const existingFollow = await prisma.follow.findUnique({
@@ -30,7 +30,7 @@ export const followUser = async (req: Request<{}, {}, FollowUserRequest>, res: R
         });
 
         if (existingFollow) {
-			const deletedFollow = await prisma.follow.delete({
+			await prisma.follow.delete({
 				where: { id: existingFollow.id }
 			});
 			return res.status(200).json({ message: "Unfollowed successfully" });
@@ -43,9 +43,9 @@ export const followUser = async (req: Request<{}, {}, FollowUserRequest>, res: R
 			}
 		})
 		
-		return res.sendStatus(200).json({ data: newFollow, message: "Follow successful" });
+		return res.status(200).json({ data: newFollow, message: "Follow successful" });
 	} catch (err) {
 		console.log(err);
-		return res.sendStatus(500).json({ message: "Internal server error" });
+		return res.status(500).json({ message: "Internal server error" });
 	}
 }

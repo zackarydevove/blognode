@@ -43,16 +43,68 @@ export const deleteUser = async (req: Request<{}, {}, DeleteUserRequest>, res: R
 			return res.status(404).json({ message: "User ID is required" });
 		}
 
-		const deletedUser = await prisma.user.delete({
+		await prisma.user.delete({
 			where: { id: user.id }
 		})
 
-		res.sendStatus(200).json({ message: "Your account has been deleted successfully" });
+		res.status(200).json({ message: "Your account has been deleted successfully" });
 	} catch (err) {
 		console.log(err)
 		return res.status(500).json({ message: "Internal server error" });
 	}
 }
+
+interface GetUserByIdRequest {
+	targetId: number,
+}
+
+export const getUserById = async (req: Request<{}, {}, GetUserByIdRequest>, res: Response) => {
+    try {
+        const { targetId } = req.body;
+
+		const target = prisma.user.findFirst({
+			where: { id: targetId }
+		})
+
+		if (!target) {
+            return res.status(404).json({ message: "Target not found" });
+		}
+
+        return res.status(200).json(target);
+
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+interface GetThreeRandomUsersRequest {
+	user: UserInterface,
+}
+
+export const getThreeRandomUsers = async (req: Request<{}, {}, GetThreeRandomUsersRequest>, res: Response) => {
+	try {
+		const { user } = req.body;
+
+        if (!user || !user.id) {
+			return res.status(404).json({ message: "User ID is required" });
+		}
+
+        const users: UserInterface[] = await prisma.$queryRaw<UserInterface[]>`SELECT * FROM "User" WHERE "id" != ${user.id} ORDER BY RANDOM() LIMIT 3`;
+
+        if (!users || users.length === 0) {
+            return res.status(404).json({ message: "No users found" });
+        }
+
+		return res.status(200).json(users);
+
+	} catch (err) {
+		console.log(err);
+		return res.status(500).json({ message: "Internal server error" });
+	}
+}
+
+
 
 interface ChangeFirstnameRequest {
 	user: UserInterface,
