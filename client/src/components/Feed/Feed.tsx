@@ -1,7 +1,7 @@
 import React from 'react'
 import Post from './Post'
 
-const ActualFeed: React.FC = () => {
+const Feed: React.FC = () => {
   
 	return (
 
@@ -20,4 +20,4 @@ const ActualFeed: React.FC = () => {
 	)
 }
 
-export default ActualFeed
+export default Feed

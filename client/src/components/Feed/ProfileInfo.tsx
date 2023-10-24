@@ -1,13 +1,17 @@
 import React from 'react'
 import { BsPersonFillGear, BsBriefcase } from 'react-icons/bs'
 import { MdOutlineLocationOn } from 'react-icons/md'
+import { useNavigate } from 'react-router-dom'
 
 const ProfileInfo: React.FC = () => {
+	const navigate = useNavigate();
+
   return (
 	<div className='bg-[#191819] w-full rounded-xl p-5 text-[#cac9ca]'>
 		<div className='flex items-center '>
 			<div className='flex items-center gap-4 flex-1'>
-				<div className='h-14 w-14 bg-black rounded-full hover:cursor-pointer'/>
+				<div className='h-14 w-14 bg-black rounded-full hover:cursor-pointer'
+				onClick={() => navigate('/profile')}/>
 				<div className='flex flex-col'>
 					<p className='text-lg font-bold'>My Name</p>
 					<p className='text-sm text-[#5e5d5e]'>5 friends</p>

@@ -8,9 +8,53 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
   password  String
-  firstname  String
+  firstname String
   lastname  String
+  followers Follow[]  @relation("follower")
+  following Follow[]  @relation("following")
+  posts     Post[]    @relation("userPosts")
+  likes     Like[]    @relation("userLikes")
+  comments  Comment[] @relation("userComments")
+}
+
+model Follow {
+  id          Int      @id @default(autoincrement())
+  followerId  Int
+  followingId Int
+  createdAt   DateTime @default(now())
+  follower    User     @relation("follower", fields: [followerId], references: [id])
+  following   User     @relation("following", fields: [followingId], references: [id])
+
+  @@unique([followerId, followingId])
+}
+
+model Post {
+  id        Int       @id @default(autoincrement())
+  creatorId Int
+  creator   User      @relation("userPosts", fields: [creatorId], references: [id])
+  content   String
+  createdAt DateTime  @default(now())
+  likes     Like[]    @relation("postLikes")
+  comments  Comment[] @relation("postComments")
+}
+
+model Like {
+  id     Int  @id @default(autoincrement())
+  postId Int
+  post   Post @relation("postLikes", fields: [postId], references: [id])
+  userId Int
+  user   User @relation("userLikes", fields: [userId], references: [id])
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  postId    Int
+  post      Post     @relation("postComments", fields: [postId], references: [id])
+  userId    Int
+  user      User     @relation("userComments", fields: [userId], references: [id])
+  content   String
+  createdAt DateTime @default(now())
 }

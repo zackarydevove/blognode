@@ -22,5 +22,5 @@
   },
   "include": [
     "**/*.ts", "**/*.tsx"
-  ]
+, "src/__test__/pages/SignupPage.test.tsx"  ]
 }
