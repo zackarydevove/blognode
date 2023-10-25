@@ -1,6 +1,10 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import authRoute from './route/authRoute';
+import feedRoute from './route/feedRoute';
+import followRoute from './route/followRoute';
+import postRoute from './route/postRoute';
+import userRoute from './route/userRoute';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -18,6 +22,10 @@ app.use(cors({
 }));
 
 app.use('/api/auth', authRoute);
+app.use('/api/feed', feedRoute);
+app.use('/api/follow', followRoute);
+app.use('/api/post', postRoute);
+app.use('/api/user', userRoute);
 
 prisma.$connect()
 	.then(() => {

@@ -3,14 +3,15 @@ import UserInterface from "../interfaces/User"
 import { prisma } from '../index'
 
 interface FollowUserRequest {
-	user: UserInterface,
+	userId: number,
 	target: number,
 }
 
 export const followUser = async (req: Request<{}, {}, FollowUserRequest>, res: Response) => {
 	try {
-		const { user, target } = req.body;
-		if (!user.id) {
+		const { userId, target } = req.body;
+
+		if (!userId) {
 			return res.status(401).json({ message: "You are not authorized" });
 		}
 
@@ -23,7 +24,7 @@ export const followUser = async (req: Request<{}, {}, FollowUserRequest>, res: R
         const existingFollow = await prisma.follow.findUnique({
             where: {
                 followerId_followingId: {
-                    followerId: user.id,
+                    followerId: userId,
                     followingId: target,
                 },
             },
@@ -38,7 +39,7 @@ export const followUser = async (req: Request<{}, {}, FollowUserRequest>, res: R
 
 		const newFollow = await prisma.follow.create({
 			data: {
-				followerId: user.id,
+				followerId: userId,
 				followingId: target,
 			}
 		})

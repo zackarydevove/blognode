@@ -3,21 +3,21 @@ import { Request, Response } from 'express'
 import UserInterface from '../interfaces/User'
 
 interface CreatePostRequest {
-	user: UserInterface,
+	userId: number,
 	content: string
 }
 
 export const createPost = async (req: Request<{}, {}, CreatePostRequest>, res: Response) => {
 	try {
-		const { user, content } = req.body;
+		const { userId, content } = req.body;
 
-		if (!user.id) {
+		if (!userId) {
 			return res.status(401).json({ message: "You are not authorized" });
 		}
 
 		const newPost = await prisma.post.create({
 			data: {
-				creatorId: user.id,
+				creatorId: userId,
 				content: content,
 			}
 		})
@@ -30,15 +30,15 @@ export const createPost = async (req: Request<{}, {}, CreatePostRequest>, res: R
 }
 
 interface DeletePostRequest {
-	user : UserInterface,
-	postId : number,
+	userId: number,
+	postId: number,
 }
 
 export const deletePost = async (req: Request<{}, {}, DeletePostRequest>, res: Response) => {
 	try {
-		const { user, postId } = req.body;
+		const { userId, postId } = req.body;
 
-		if (!user.id) {
+		if (!userId) {
 			return res.status(401).json({ message: "You are not authorized" });
 		}
 
@@ -50,7 +50,7 @@ export const deletePost = async (req: Request<{}, {}, DeletePostRequest>, res: R
             return res.status(404).json({ message: "Post not found" });
         }
 
-        if (post.creatorId !== user.id) {
+        if (post.creatorId !== userId) {
             return res.status(403).json({ message: "You're not authorized to delete this post" });
         }
 
@@ -66,15 +66,15 @@ export const deletePost = async (req: Request<{}, {}, DeletePostRequest>, res: R
 }
 
 interface LikePostRequest {
-	user: UserInterface,
+	userId: number,
 	postId: number
 }
 
 export const likePost = async (req: Request<{}, {}, LikePostRequest>, res: Response) => {
 	try {
-		const { user, postId } = req.body;
+		const { userId, postId } = req.body;
 
-		if (!user.id) {
+		if (!userId) {
 			return res.status(401).json({ message: "You are not authorized" });
 		}
 
@@ -89,7 +89,7 @@ export const likePost = async (req: Request<{}, {}, LikePostRequest>, res: Respo
         const existingLike = await prisma.like.findFirst({
             where: {
                 postId: postId,
-                userId: user.id
+                userId: userId
             }
         });
 
@@ -108,7 +108,7 @@ export const likePost = async (req: Request<{}, {}, LikePostRequest>, res: Respo
 		const like = await prisma.like.create({
 			data: {
 				postId: postId,
-				userId: user.id,
+				userId: userId,
 			}
 		})
 
@@ -130,17 +130,17 @@ export const likePost = async (req: Request<{}, {}, LikePostRequest>, res: Respo
 }
 
 interface CommentPostRequest {
-	user: UserInterface,
+	userId: number,
 	postId: number,
 	content: string,
 }
 
 export const commentPost = async (req: Request<{}, {}, CommentPostRequest>, res: Response) => {
     try {
-        const { user, postId, content } = req.body;
+        const { userId, postId, content } = req.body;
 
         // Check if user is authorized
-        if (!user.id) {
+        if (!userId) {
             return res.status(401).json({ message: "You are not authorized" });
         }
 
@@ -157,7 +157,7 @@ export const commentPost = async (req: Request<{}, {}, CommentPostRequest>, res:
         const newComment = await prisma.comment.create({
             data: {
                 postId: postId,
-                userId: user.id,
+                userId: userId,
                 content: content
             }
         });
@@ -171,16 +171,16 @@ export const commentPost = async (req: Request<{}, {}, CommentPostRequest>, res:
 }
 
 interface DeleteCommentRequest {
-    user: UserInterface;
+    userId: number;
     commentId: number;
 }
 
 export const deleteComment = async (req: Request<{}, {}, DeleteCommentRequest>, res: Response) => {
     try {
-        const { user, commentId } = req.body;
+        const { userId, commentId } = req.body;
 
         // Check if user is authorized
-        if (!user.id) {
+        if (!userId) {
             return res.status(401).json({ message: "You are not authorized" });
         }
 
@@ -194,7 +194,7 @@ export const deleteComment = async (req: Request<{}, {}, DeleteCommentRequest>, 
         }
 
         // Check if user is the author of the comment
-        if (comment.userId !== user.id) {
+        if (comment.userId !== userId) {
             return res.status(403).json({ message: "You're not authorized to delete this comment" });
         }
 

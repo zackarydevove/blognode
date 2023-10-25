@@ -1,10 +1,9 @@
 import express from 'express';
-import { login, register } from '../controller/authController';
+import { followUser } from '../controller/followController';
 import { jwtCheck } from '../middleware/jwtCheck';
 
 const router = express.Router();
 
-router.post('/login', login);
-router.post('/register', register);
+router.post('/', jwtCheck, followUser);
 
 export default router;

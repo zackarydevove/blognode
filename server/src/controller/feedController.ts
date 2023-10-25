@@ -3,21 +3,21 @@ import { Request, Response } from "express";
 import UserInterface from "../interfaces/User";
 
 interface GetFeedRequest {
-	user: UserInterface
+	userId: number
 }
 
 export const getFeed = async (req: Request<{}, {}, GetFeedRequest>, res: Response) => {
     try {
-        const { user } = req.body;
+        const { userId } = req.body;
 
-        if (!user || !user.id) {
+        if (!userId) {
             return res.status(401).json({ message: "User ID is required" });
         }
 
         // Fetch users the main user is following
         const following = await prisma.follow.findMany({
             where: {
-                followerId: user.id
+                followerId: userId
             },
             select: {
                 followingId: true

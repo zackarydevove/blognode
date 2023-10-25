@@ -67,13 +67,9 @@ export const register = async (req: Request<{}, {}, RegisterRequestBody>, res: R
 			}
 		})
 		const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET as string, { expiresIn: '1h' });
-		return res.status(200).json({ user: newUser, token: token, message: "You have successfully created a new account."})
+		return res.status(200).json({ token: token, message: "You have successfully created a new account."})
 	} catch (error) {
 		console.error("Error register:", error);
 		return res.status(500).json({ message: "Internal server error" });
 	}
-}
-
-export const logout = (req: Request, res: Response) => {
-	console.log("yo");
 }
