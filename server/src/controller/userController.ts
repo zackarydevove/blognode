@@ -26,6 +26,61 @@ export const getUserByEmail = async (req: Request, res: Response) => {
 	}
 }
 
+interface GetUserByTokenRequest extends Request {
+	userId?: any;
+}
+
+export const getUserByToken = async (req: GetUserByTokenRequest, res: Response) => {
+	try {
+        const userId = req.userId;
+
+		if (!userId) {
+			console.log(`User ID is required`);
+			return res.status(404).json({ message: "User ID is required" });
+		}
+
+		const user = await prisma.user.findFirst({
+			where: { id: userId}
+		})
+
+		if (!user) {
+			console.log(`User with ID ${userId} not found`);
+			return res.status(404).json({ message: `User  with ID ${userId} not found` });
+		}
+
+		return res.status(200).json({ data: user, message: "User found successfully" });
+		
+	} catch (err) {
+		console.log(err)
+		return res.status(500).json({ message: "Internal server error" });
+	}
+}
+
+
+export const getUserByUsername = async (req: Request, res: Response) => {
+	try {
+		const username = req.query.username as string;	
+
+		if (!validateName(username)) {
+			return res.status(400).json({ message: "Invalid username format" });
+		}
+
+		const user = await prisma.user.findFirst({
+			where: { username: username }
+		})
+
+		if (!user) {
+			console.log(`User with username ${username} not found`);
+			return res.status(404).json({ message: "User not found" });
+		}
+		return res.status(200).json({ data: user, message: "User found successfully" });
+	} catch (err) {
+		console.log(err)
+		return res.status(500).json({ message: "Internal server error" });
+	}
+}
+
+
 interface DeleteUserRequest {
 	userId: number,
 }
@@ -101,14 +156,14 @@ export const getThreeRandomUsers = async (req: Request, res: Response) => {
 
 
 
-interface ChangeFirstnameRequest {
+interface ChangeUsernameRequest {
 	userId: number,
-	firstname: string,
+	username: string,
 }
 
-export const changeFirstname = async (req: Request<{}, {}, ChangeFirstnameRequest>, res: Response) => {
+export const changeUsername = async (req: Request<{}, {}, ChangeUsernameRequest>, res: Response) => {
 	try {
-		const { userId, firstname } = req.body;
+		const { userId, username } = req.body;
 
 		if (!userId) {
 			return res.status(401).json({ message: "User ID is required" });
@@ -122,63 +177,21 @@ export const changeFirstname = async (req: Request<{}, {}, ChangeFirstnameReques
 			return res.status(404).json({ message: "User not found" });
 		}
 
-		if (!validateName(firstname)) {
+		if (!validateName(username)) {
 			return res.status(400).json({ message: "Invalid first name" });
 		}
 
-		if (firstname === user.firstname) {
-			console.log("User can't change with the same firstname");
-			return res.status(404).json({ message: "The firstnames are the same" });
+		if (username === user.username) {
+			console.log("User can't change with the same username");
+			return res.status(404).json({ message: "The usernames are the same" });
 		}
 
 		const updatedUser = await prisma.user.update({
 			where: { id: userId },
-			data: { firstname: firstname },
+			data: { username: username },
 		})
 		
-		return res.status(200).json({ data: updatedUser, message: "User's firstname updated successfully" })
-	} catch (err) {
-		console.log(err)
-		return res.status(500).json({ message: "Internal server error" });
-	}
-}
-
-interface ChangeLastnameRequest {
-	userId: number,
-	lastname: string,
-}
-
-export const changeLastname = async (req: Request<{}, {}, ChangeLastnameRequest>, res: Response) => {
-	try {
-		const { userId, lastname } = req.body;
-
-		if (!userId) {
-			return res.status(401).json({ message: "User ID is required" });
-		}
-
-		const user = await prisma.user.findFirst({
-			where: { id: userId}
-		})
-
-		if (!user) {
-			return res.status(404).json({ message: "User not found" });
-		}
-
-		if (!validateName(lastname)) {
-			return res.status(400).json({ message: "Invalid last name" });
-		}
-		
-		if (lastname === user.lastname) {
-			console.log("User can't change with the same lastname");
-			return res.status(404).json({ message: "The lastnames are the same" });
-		}
-
-		const updatedUser = await prisma.user.update({
-			where: { id: userId },
-			data: { lastname: lastname },
-		})
-		
-		return res.status(200).json({ data: updatedUser, message: "User's lastname updated successfully" })
+		return res.status(200).json({ data: updatedUser, message: "User's username updated successfully" })
 	} catch (err) {
 		console.log(err)
 		return res.status(500).json({ message: "Internal server error" });

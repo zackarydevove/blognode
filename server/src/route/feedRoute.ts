@@ -1,9 +1,10 @@
 import express from 'express';
-import { getFeed } from '../controller/feedController';
+import { getFeed, getUserPosts } from '../controller/feedController';
 import { jwtCheck } from '../middleware/jwtCheck';
 
 const router = express.Router();
 
-router.post('/:userId', jwtCheck, getFeed);
+router.get('/:userId', jwtCheck, getFeed);
+router.get('/posts/:userId', jwtCheck, getUserPosts);
 
 export default router;

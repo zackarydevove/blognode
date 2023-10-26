@@ -4,8 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const SignupPage: React.FC = () => {
 	const [email, setEmail] = useState<string>('');
-	const [firstname, setFirstname] = useState<string>('');
-	const [lastname, setLastname] = useState<string>('');
+	const [username, setUsername] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [confirmPassword, setConfirmPassword] = useState<string>('');
 	const navigate = useNavigate();
@@ -14,12 +13,13 @@ const SignupPage: React.FC = () => {
 		e.preventDefault();
 		console.log("hey");
 		try {
-			const res = await register(email, password, confirmPassword, firstname, lastname);
-			if (res && res.data.token)  {
-				localStorage.setItem("jwtAuth", res.data.token);
-				navigate('/feed');
+			const token = await register(email, password, confirmPassword, username);
+			if (token === "Incorrect email or password" || token === "Failed to login.") {
+				return ;
 			}
-			console.log("res:", res);
+			localStorage.setItem("jwtAuth", token);
+			navigate('/feed');
+			console.log("res:", token);
 		} catch (err) {
 			console.log(err);
 		}
@@ -29,7 +29,7 @@ const SignupPage: React.FC = () => {
 		if (localStorage.getItem("jwtAuth")) {
 			navigate('/feed');
 		}
-	}, []);
+	}, [navigate]);
 
   return (
 	<div className='flex justify-center items-center h-screen bg-[#f8f9fa] relative'>
@@ -51,18 +51,8 @@ const SignupPage: React.FC = () => {
 					<input
 						className='bg-white p-3 w-full rounded-md border border-[#c0cad8] placeholder-[#c0cad8] placeholder:font-bold'
 						placeholder='First name'
-						value={firstname}
-						onChange={(e) => setFirstname(e.target.value)}>
-					</input>
-				</div>
-
-				<div>
-					<label></label>
-					<input
-						className='bg-white p-3 w-full rounded-md border border-[#c0cad8] placeholder-[#c0cad8] placeholder:font-bold'
-						placeholder='Last name'
-						value={lastname}
-						onChange={(e) => setLastname(e.target.value)}>
+						value={username}
+						onChange={(e) => setUsername(e.target.value)}>
 					</input>
 				</div>
 

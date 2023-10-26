@@ -3,7 +3,7 @@ import Navbar from '../components/Feed/Navbar'
 import SendPost from '../components/Feed/SendPost'
 import Feed from '../components/Feed/Feed'
 import RandomAdd from '../components/Feed/RandomAdd'
-import ProfileInfo from '../components/Feed/ProfileInfo'
+import ProfileInfo from '../components/Feed/FeedProfileInfo'
 
 const FeedPage: React.FC = () => {
 	return (

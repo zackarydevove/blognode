@@ -13,20 +13,68 @@ export const getUserByEmail = async (email: string) => {
         if (response.status === 200 && response.data) {
             return response.data;
         } else {
-            throw new Error(response.data.message || "Failed to get user by email.");
+            return (response.data.message || "Failed to get user by email.");
         }
     } catch (error: any) {
         const errorMessage = error.response && error.response.data.message ? error.response.data.message : error.message;
         console.error("Error getting user by email:", errorMessage);
-        throw new Error(errorMessage);
+        return (errorMessage);
     }
 }
+
+export const getUserByToken = async () => {
+    try {
+        const token = localStorage.getItem("jwtAuth");
+
+		if (!token) {
+			return null;
+		}
+
+        const response = await axios.get(API, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        if (response.status === 200 && response.data) {
+            return response.data.data;
+        } else {
+			return null;
+        }
+    } catch (error: any) {
+        const errorMessage = error.response && error.response.data.message ? error.response.data.message : error.message;
+        console.error("Error getting user by token:", errorMessage);
+        return ;
+    }
+}
+
+export const getUserByUsername = async (username: string) => {
+    try {
+		console.log("username in api call: ", username);
+        const response = await axios.get(`${API}/username`, {
+            params: {
+                username
+            }
+        });
+        
+        if (response.status === 200 && response.data) {
+            return response.data.data;
+        } else {
+            return (response.data.message || "Failed to get user by username.");
+        }
+    } catch (error: any) {
+        const errorMessage = error.response && error.response.data.message ? error.response.data.message : error.message;
+        console.error("Error getting user by username:", errorMessage);
+        return (errorMessage);
+    }
+}
+
 
 export const deleteUser = async (userId: number) => {
     try {
         const token = localStorage.getItem("jwtAuth");
 
-        const response = await axios.delete(`${API}/`, {
+        const response = await axios.delete(API, {
             headers: {
                 Authorization: `Bearer ${token}`
             },
@@ -38,12 +86,12 @@ export const deleteUser = async (userId: number) => {
         if (response.status === 200 && response.data) {
             return response.data;
         } else {
-            throw new Error(response.data.message || "Failed to get user by email.");
+            return (response.data.message || "Failed to get user by email.");
         }
     } catch (error: any) {
         const errorMessage = error.response && error.response.data.message ? error.response.data.message : error.message;
         console.error("Error getting user by email:", errorMessage);
-        throw new Error(errorMessage);
+        return (errorMessage);
     }
 }
 
@@ -59,11 +107,11 @@ export const getUserById = async (targetId: number) => {
         if (response.status === 200) {
             return response.data;
         } else {
-            throw new Error(response.data.message);
+            return (response.data.message);
         }
     } catch (error: any) {
         console.error("Error fetching user by ID:", error.message);
-        throw error;
+        return error;
     }
 };
 
@@ -79,11 +127,11 @@ export const getThreeRandomUsers = async (userId: number) => {
         if (response.status === 200) {
             return response.data;
         } else {
-            throw new Error(response.data.message);
+            return (response.data.message);
         }
     } catch (error: any) {
         console.error("Error fetching user by ID:", error.message);
-        throw error;
+        return error;
     }
 };
 
@@ -93,11 +141,11 @@ export const changeFirstname = async (userId: number, firstname: string) => {
         if (response.status === 200) {
             return response.data;
         } else {
-            throw new Error(response.data.message);
+            return (response.data.message);
         }
     } catch (error: any) {
         console.error("Error updating firstname:", error.message);
-        throw error;
+        return error;
     }
 };
 
@@ -107,11 +155,11 @@ export const changeLastname = async (userId: number, lastname: string) => {
         if (response.status === 200) {
             return response.data;
         } else {
-            throw new Error(response.data.message);
+            return (response.data.message);
         }
     } catch (error: any) {
         console.error("Error updating lastname:", error.message);
-        throw error;
+        return error;
     }
 };
 
@@ -121,10 +169,10 @@ export const changePassword = async (userId: number, currentPassword: string, ne
         if (response.status === 200) {
             return response.data;
         } else {
-            throw new Error(response.data.message);
+            return (response.data.message);
         }
     } catch (error: any) {
         console.error("Error updating password:", error.message);
-        throw error;
+        return error;
     }
 };

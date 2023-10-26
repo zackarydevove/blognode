@@ -1,6 +1,5 @@
 import { prisma } from '../index'
 import { Request, Response } from 'express'
-import UserInterface from '../interfaces/User'
 
 interface CreatePostRequest {
 	userId: number,
@@ -10,6 +9,9 @@ interface CreatePostRequest {
 export const createPost = async (req: Request<{}, {}, CreatePostRequest>, res: Response) => {
 	try {
 		const { userId, content } = req.body;
+
+		console.log("userId in createPost: ", userId);
+		console.log("content in createPost: ", content);
 
 		if (!userId) {
 			return res.status(401).json({ message: "You are not authorized" });
@@ -21,6 +23,8 @@ export const createPost = async (req: Request<{}, {}, CreatePostRequest>, res: R
 				content: content,
 			}
 		})
+
+		console.log("newPost: ", newPost);
 
 		return res.status(200).json({ data: newPost, message: "New post created successfully" });
 	} catch (err) {

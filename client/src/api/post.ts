@@ -1,10 +1,13 @@
 import axios from "axios";
 
-const API = process.env.REACT_APP_SERVER_URL + "/api/follow";
+const API = process.env.REACT_APP_SERVER_URL + "/api/post";
 
 export const createPost = async (userId: number, content: string) => {
     try {
         const token = localStorage.getItem("jwtAuth");
+
+		console.log("userId in createPost: ", userId);
+		console.log("content in createPost: ", content);
 
         const response = await axios.post(API, {
             userId,
@@ -15,15 +18,17 @@ export const createPost = async (userId: number, content: string) => {
             }
         });
         
+		console.log("response in createPost: ", response);
+
         if (response.status === 200 && response.data) {
             return response.data;
         } else {
-            throw new Error(response.data.message || "Failed to follow user.");
+            return (response.data.message || "Failed to follow user.");
         }
     } catch (error: any) {
         const errorMessage = error.response && error.response.data.message ? error.response.data.message : error.message;
         console.error("Error following user:", errorMessage);
-        throw new Error(errorMessage);
+        return (errorMessage);
     }
 }
 
@@ -44,12 +49,12 @@ export const deletePost = async (userId: number, postId: number) => {
         if (response.status === 200 && response.data) {
             return response.data;
         } else {
-            throw new Error(response.data.message || "Failed to follow user.");
+            return (response.data.message || "Failed to follow user.");
         }
     } catch (error: any) {
         const errorMessage = error.response && error.response.data.message ? error.response.data.message : error.message;
         console.error("Error following user:", errorMessage);
-        throw new Error(errorMessage);
+        return (errorMessage);
     }
 }
 
@@ -69,12 +74,12 @@ export const likePost = async (userId: number, postId: number) => {
         if (response.status === 200 && response.data) {
             return response.data;
         } else {
-            throw new Error(response.data.message || "Failed to follow user.");
+            return (response.data.message || "Failed to follow user.");
         }
     } catch (error: any) {
         const errorMessage = error.response && error.response.data.message ? error.response.data.message : error.message;
         console.error("Error following user:", errorMessage);
-        throw new Error(errorMessage);
+        return (errorMessage);
     }
 }
 
@@ -95,12 +100,12 @@ export const commentPost = async (userId: number, postId: number, content: strin
         if (response.status === 200 && response.data) {
             return response.data;
         } else {
-            throw new Error(response.data.message || "Failed to follow user.");
+            return (response.data.message || "Failed to follow user.");
         }
     } catch (error: any) {
         const errorMessage = error.response && error.response.data.message ? error.response.data.message : error.message;
         console.error("Error following user:", errorMessage);
-        throw new Error(errorMessage);
+        return (errorMessage);
     }
 }
 
@@ -120,11 +125,11 @@ export const deleteComment = async (userId: number, commentId: number) => {
         if (response.status === 200 && response.data) {
             return response.data;
         } else {
-            throw new Error(response.data.message || "Failed to follow user.");
+            return (response.data.message || "Failed to follow user.");
         }
     } catch (error: any) {
         const errorMessage = error.response && error.response.data.message ? error.response.data.message : error.message;
         console.error("Error following user:", errorMessage);
-        throw new Error(errorMessage);
+        return (errorMessage);
     }
 }

@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import Post from './Post'
-import { getFeed } from '../../api/feed';
+import Post from '../Feed/Post';
+import { getUserPosts } from '../../api/feed';
 import { useUser } from '../../context/UserContext';
+import { UserInterface } from '../../interface/UserInterface';
 
-const Feed: React.FC = () => {
+interface ProfileFeedProps {
+	profile: UserInterface | null,
+}
+
+const ProfileFeed: React.FC<ProfileFeedProps> = ({ profile }) => {
 	const [posts, setPosts] = useState([]);
     const user = useUser();
 
     useEffect(() => {
         const fetchPosts = async () => {
-			if (!user) return;
-            const data = await getFeed(user.id);
+			if (!profile) return;
+            const data = await getUserPosts(profile.id);
             setPosts(data);
         };
         fetchPosts();
-    }, [user]);
+    }, [profile]);
 
     if (!user) {
         return <p>loading...</p>
@@ -34,4 +39,4 @@ const Feed: React.FC = () => {
 	)
 }
 
-export default Feed;
+export default ProfileFeed;

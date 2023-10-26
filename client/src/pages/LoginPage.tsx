@@ -10,12 +10,13 @@ const LoginPage: React.FC = () => {
 	const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
-			const res = await login(email, password);
-			if (res && res.data.token) {
-				localStorage.setItem("jwtAuth", res.data.token);
-				navigate('/feed');
+			const token = await login(email, password);
+			if (token === "Incorrect email or password" || token === "Failed to login.") {
+				return ;
 			}
-			console.log("res:", res);
+			localStorage.setItem("jwtAuth", token);
+			navigate('/feed');
+			console.log("token:", token);
 		} catch (err) {
 			console.log(err);
 		}
@@ -25,7 +26,7 @@ const LoginPage: React.FC = () => {
 		if (localStorage.getItem("jwtAuth")) {
 			navigate('/feed');
 		}
-	}, []);
+	}, [navigate]);
 
   return (
 	<div className='flex justify-center items-center h-screen bg-[#f8f9fa] relative'>
@@ -51,7 +52,7 @@ const LoginPage: React.FC = () => {
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}>
 					</input>
-					<a href="#" className='absolute -bottom-9 right-0 text-lg text-[#3e5fd9] font-bold'>Forgot password?</a>
+					<a href="/passwordforgot" className='absolute -bottom-9 right-0 text-lg text-[#3e5fd9] font-bold'>Forgot password?</a>
 				</div>
 
 				<button className='rounded-full bg-[#3e5fd9] text-white mt-7 p-4 font-bold'>SIGN IN</button>

@@ -8,7 +8,7 @@ export const followUser = async (userId: number, targetId: number) => {
 
         const response = await axios.post(API, {
             userId,
-            target: targetId
+            targetId: targetId
         }, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -18,11 +18,38 @@ export const followUser = async (userId: number, targetId: number) => {
         if (response.status === 200 && response.data) {
             return response.data;
         } else {
-            throw new Error(response.data.message || "Failed to follow user.");
+            return (response.data.message || "Failed to follow user.");
         }
     } catch (error: any) {
         const errorMessage = error.response && error.response.data.message ? error.response.data.message : error.message;
         console.error("Error following user:", errorMessage);
-        throw new Error(errorMessage);
+        return (errorMessage);
+    }
+}
+
+
+export const checkFollow = async (userId: number, targetId: number) => {
+    try {
+        const token = localStorage.getItem("jwtAuth");
+
+        const response = await axios.get(`${API}/check`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            params: {
+                userId,
+                targetId
+            }
+        });
+
+        if (response.status === 200 && response.data) {
+            return response.data.isFollowing;
+        } else {
+            return (response.data.message || "Failed to check follow.");
+        }
+    } catch (error: any) {
+        const errorMessage = error.response && error.response.data.message ? error.response.data.message : error.message;
+        console.error("Error checking if user follow profile:", errorMessage);
+        return (errorMessage);
     }
 }

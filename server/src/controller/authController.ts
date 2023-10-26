@@ -23,7 +23,7 @@ export const login = async (req: Request<{}, {}, LoginRequestBody>, res: Respons
 			return res.status(400).json({ message: "Incorrect email or password" });
 		}
 	
-		const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string, { expiresIn: '1h' });
+		const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string);
 	
 		return res.status(200).json({ token });
 	} catch (error) {
@@ -36,13 +36,12 @@ interface RegisterRequestBody {
 	email: string,
 	password: string,
 	confirmPassword: string,
-	firstname: string,
-	lastname: string,
+	username: string,
 }
 
 export const register = async (req: Request<{}, {}, RegisterRequestBody>, res: Response) => {
 	try {
-		const { email, password, confirmPassword, firstname, lastname } = req.body;
+		const { email, password, confirmPassword, username } = req.body;
 
 		const user = await prisma.user.findUnique({
 			where: {
@@ -62,11 +61,10 @@ export const register = async (req: Request<{}, {}, RegisterRequestBody>, res: R
 			data: {
 				email: email,
 				password: hashedPassword,
-				firstname: firstname,
-				lastname: lastname,
+				username: username,
 			}
 		})
-		const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET as string, { expiresIn: '1h' });
+		const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET as string);
 		return res.status(200).json({ token: token, message: "You have successfully created a new account."})
 	} catch (error) {
 		console.error("Error register:", error);
