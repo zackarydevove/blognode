@@ -28,9 +28,8 @@ const SendPost: React.FC = () => {
 
 	<div className='flex flex-col bg-[#191819] w-full min-h-[200px] rounded-xl p-4'>
 		<div className='flex gap-6 items-center flex-1'>
-			<div className='h-16 w-16 bg-black rounded-full'/>
-			<div className='flex items-center flex-1 h-full bg-[#2e2d2e] rounded-full'>
-				<textarea className='w-full rounded-full bg-[#2e2d2e] px-6 outline-none'
+			<div className='flex items-center flex-1 h-full bg-[#2e2d2e] rounded-2xl px-6'>
+				<textarea className='w-full bg-[#2e2d2e] outline-none resize-none hide-scrollbar text-[#c4c4c4]'
 					placeholder="What's on your mind... ?"
 					value={content}
 					onChange={(e) => setContent(e.target.value)}/>

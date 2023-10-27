@@ -28,6 +28,7 @@ interface PostInterface {
 	createdAt: Date;
 	likesCount: number;
 	likes: LikeInterface[];
+	commentsCount: number;
 	comments: CommentInterface[];
 }
   

@@ -1,6 +1,6 @@
 import React from 'react'
 import { BiSolidMoon } from 'react-icons/bi'
-import { BsFillChatLeftTextFill, BsFillBellFill, BsFillQuestionCircleFill, BsFillArrowUpRightCircleFill } from 'react-icons/bs'
+import { BsFillChatLeftTextFill, BsFillBellFill, BsFillArrowUpRightCircleFill } from 'react-icons/bs'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
 
@@ -25,7 +25,6 @@ const Navbar: React.FC = () => {
 				<BiSolidMoon size={'1.2em'} />
 				<BsFillChatLeftTextFill size={'1.2em'} />
 				<BsFillBellFill size={'1.2em'} />
-				<BsFillQuestionCircleFill size={'1.2em'} />
 				<BsFillArrowUpRightCircleFill className="hover:cursor-pointer" onClick={handleLogout} size={'1.2em'}/>
 			</div>
 		</div>

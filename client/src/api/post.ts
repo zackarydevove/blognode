@@ -83,6 +83,32 @@ export const likePost = async (userId: number, postId: number) => {
     }
 }
 
+export const checkUserLikedPost = async (userId: number, postId: number) => {
+    try {
+        const token = localStorage.getItem("jwtAuth");
+
+        const response = await axios.get(API + "/like", {
+            params: {
+                userId,
+				postId
+            },
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        
+        if (response.status === 200 && response.data) {
+            return response.data.data;
+        } else {
+            return (response.data.message || "Failed to follow user.");
+        }
+    } catch (error: any) {
+        const errorMessage = error.response && error.response.data.message ? error.response.data.message : error.message;
+        console.error("Error following user:", errorMessage);
+        return (errorMessage);
+    }
+}
+
 export const commentPost = async (userId: number, postId: number, content: string) => {
     try {
         const token = localStorage.getItem("jwtAuth");
