@@ -43,7 +43,7 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({ profile }) => {
 	}
 
   return (
-	<div className='bg-[#191819] w-full rounded-xl p-5 text-[#cac9ca]'>
+	<div className='bg-white dark:bg-[#191819] w-full rounded-xl p-5 text-[#cac9ca]'>
 		<div className='flex items-center '>
 			<div className='flex items-center gap-4 flex-1'>
 				<div className='h-14 w-14 bg-black rounded-full hover:cursor-pointer'
@@ -64,7 +64,7 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({ profile }) => {
 				}
 			</div>
 		</div>
-		<hr className='border-[#2e2d2e] my-6'/>
+		<hr className='border-[#e2dee3] my-6'/>
 		<div className='flex flex-col gap-4 ml-2'>
 			<div className='flex gap-2 items-center'>
 				<MdOutlineLocationOn size={'1.3em'}/>

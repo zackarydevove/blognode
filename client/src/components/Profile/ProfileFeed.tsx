@@ -29,7 +29,7 @@ const ProfileFeed: React.FC<ProfileFeedProps> = ({ profile }) => {
 		<div className='flex flex-col flex-1 gap-2 w-full overflow-scroll hide-scrollbar'>
             {posts.map((post, key) => (
 
-                <div className='bg-[#191819] rounded-xl' key={key}>
+                <div className='bg-white dark:bg-[#191819] rounded-xl' key={key}>
                     <Post post={post} />
                 </div>
 			))}

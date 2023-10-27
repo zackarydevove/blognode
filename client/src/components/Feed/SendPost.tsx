@@ -26,17 +26,17 @@ const SendPost: React.FC = () => {
 
   return (
 
-	<div className='flex flex-col bg-[#191819] w-full min-h-[200px] rounded-xl p-4'>
+	<div className='flex flex-col bg-white dark:bg-[#191819] w-full min-h-[200px] rounded-xl p-4'>
 		<div className='flex gap-6 items-center flex-1'>
-			<div className='flex items-center flex-1 h-full bg-[#2e2d2e] rounded-2xl px-6'>
-				<textarea className='w-full bg-[#2e2d2e] outline-none resize-none hide-scrollbar text-[#c4c4c4]'
+			<div className='flex items-center flex-1 h-full bg-[#eeedef] dark:bg-[#2e2d2e] rounded-2xl px-6'>
+				<textarea className='w-full bg-[#eeedef] dark:bg-[#2e2d2e] outline-none resize-none hide-scrollbar text-black dark:text-white'
 					placeholder="What's on your mind... ?"
 					value={content}
 					onChange={(e) => setContent(e.target.value)}/>
 			</div>
 		</div>
-		<hr className='border-[#2e2d2e] my-4'/>
-		<div className='flex gap-12 justify-center items-center text-[#2e2d2e]'>
+		<hr className='border-[#e2dee3] my-4'/>
+		<div className='flex gap-12 justify-center items-center text-[#eeedef] dark:text-[#2e2d2e]'>
 			<div className='flex gap-3'>
 				<BsCardImage size={'1.5em'}/>
 				<p>Image</p>
@@ -49,7 +49,7 @@ const SendPost: React.FC = () => {
 			<IoIosAttach size={'1.7em'}/>
 				<p>File</p>
 			</div>
-			<button className='bg-white rounded-full px-6 py-2' onClick={handleCreatePost}>POST</button>
+			<button className='bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:bg-white hover:text-black hover:border-black dark:hover:bg-[#191819] dark:hover:text-white dark:hover:border-white rounded-full px-6 py-2' onClick={handleCreatePost}>POST</button>
 		</div>
 	</div>
   )

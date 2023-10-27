@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { checkUserLikedPost, deletePost, likePost } from '../../api/post';
 import { useUser } from '../../context/UserContext';
 import CommentSection from '../Post/CommentSection';
+import OptionsDropdown from '../General/OptionsDropdown';
 
 const Post: React.FC<{ post: any }> = ({ post }) => {
 	const [showDropdown, setShowDropdown] = useState(false);
@@ -13,8 +14,6 @@ const Post: React.FC<{ post: any }> = ({ post }) => {
 	const [likesCount, setLikesCount] = useState<number>(post.likesCount);
 	const navigate = useNavigate();
 	const user = useUser();
-
-	console.log(post);
 
 	useEffect(() => {
 		const fetchUserLikedPost = async () => {
@@ -58,19 +57,19 @@ const Post: React.FC<{ post: any }> = ({ post }) => {
 				<div className='flex items-center gap-4 flex-1'>
 					<div className='h-12 w-12 bg-black rounded-full hover:cursor-pointer' onClick={() => navigate(`/profile/${post.creator.username}`)}/>
 					<div>
-						<p className='text-[#cac9ca]'>{post.creator.username}</p>
+						<p className='text-black dark:text-white'>{post.creator.username}</p>
 						<p className='text-xs text-[#5e5d5e]'>Software Engineer</p>
 					</div>
 				</div>
 				<div>
 					<div className='relative' onClick={() => setShowDropdown(!showDropdown)}>
-						<BsThreeDots size={"1.2em"} className='text-white'/>
+						<BsThreeDots size={"1.2em"} className='text-black dark:text-white hover:cursor-pointer'/>
 						{showDropdown && <OptionsDropdown onDelete={handleDelete} />}
 					</div>
 				</div>
 			</div>
-            <p className='text-[#cac9ca]'>{post.content}</p>
-			<hr className='border-[#2e2d2e]'/>
+            <p className='text-black dark:text-white'>{post.content}</p>
+			<hr className='border-[#e2dee3]'/>
 			<div className='flex justify-evenly text-[#3f3e3f] gap-12'>
 				<div className='flex items-center gap-3 hover:cursor-pointer hover:text-[#646264]'
 					onClick={handleLike}>
@@ -91,21 +90,11 @@ const Post: React.FC<{ post: any }> = ({ post }) => {
 					<p>12</p>
 				</div> */}
 			</div>
-			<hr className='border-[#2e2d2e]'/>
+			<hr className='border-[#e2dee3]'/>
 			<CommentSection post={post}/>
 		
         </div>
     )
 }
-
-const OptionsDropdown: React.FC<{ onDelete: () => void }> = ({ onDelete }) => {
-    return (
-        <div className="absolute bg-white rounded mt-2 w-40 right-0 z-10 shadow">
-            <button className="block w-full text-left px-4 py-2 hover:bg-gray-200" onClick={onDelete}>
-                Delete Post
-            </button>
-        </div>
-    );
-};
 
 export default Post

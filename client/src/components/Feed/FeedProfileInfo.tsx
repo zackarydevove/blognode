@@ -4,7 +4,7 @@ import { MdOutlineLocationOn } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../../context/UserContext'
 
-const ProfileInfo: React.FC = () => {
+const FeedProfileInfo: React.FC = () => {
 	const navigate = useNavigate();
 	const user = useUser();
 
@@ -13,7 +13,7 @@ const ProfileInfo: React.FC = () => {
     }
 
   return (
-	<div className='bg-[#191819] w-full rounded-xl p-5 text-[#cac9ca]'>
+	<div className='sticky top-[87px] z-50 bg-white dark:bg-[#191819] w-full rounded-xl p-5 text-black dark:text-white'>
 		<div className='flex items-center '>
 			<div className='flex items-center gap-4 flex-1'>
 				<div className='h-14 w-14 bg-black rounded-full hover:cursor-pointer'
@@ -25,7 +25,7 @@ const ProfileInfo: React.FC = () => {
 			</div>
 			<BsPersonFillGear size={'1.4em'} className='hover:cursor-pointer' />
 		</div>
-		<hr className='border-[#2e2d2e] my-6'/>
+		<hr className='border-[#e2dee3] my-6'/>
 		<div className='flex flex-col gap-4 ml-2'>
 			<div className='flex gap-2 items-center'>
 				<MdOutlineLocationOn size={'1.3em'}/>
@@ -40,4 +40,4 @@ const ProfileInfo: React.FC = () => {
   )
 }
 
-export default ProfileInfo
+export default FeedProfileInfo

@@ -1,17 +1,17 @@
 import React from 'react'
-import Navbar from '../components/Feed/Navbar'
+import Navbar from '../components/General/Navbar'
 import SendPost from '../components/Feed/SendPost'
 import Feed from '../components/Feed/Feed'
 import RandomAdd from '../components/Feed/RandomAdd'
-import ProfileInfo from '../components/Feed/FeedProfileInfo'
+import FeedProfileInfo from '../components/Feed/FeedProfileInfo'
 
 const FeedPage: React.FC = () => {
 	return (
-		<div className='h-screen w-full flex flex-col bg-[#0d0b0d]'>
+		<div className='w-full flex flex-col bg-[#f4f3f4] dark:bg-[#0e0c0e]'>
 			<Navbar />
-			<div className='flex h-full pt-8 px-24 gap-12'>
+			<div className='flex h-full pt-8 px-24 gap-12 '>
 				<div className='w-[450px] max-lg:hidden'>
-					<ProfileInfo />
+					<FeedProfileInfo />
 				</div>
 				<div className='flex flex-col gap-12 w-[700px]'>
 					<SendPost />

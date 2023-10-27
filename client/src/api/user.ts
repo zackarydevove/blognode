@@ -50,7 +50,6 @@ export const getUserByToken = async () => {
 
 export const getUserByUsername = async (username: string) => {
     try {
-		console.log("username in api call: ", username);
         const response = await axios.get(`${API}/username`, {
             params: {
                 username
@@ -173,6 +172,31 @@ export const changePassword = async (userId: number, currentPassword: string, ne
         }
     } catch (error: any) {
         console.error("Error updating password:", error.message);
+        return error;
+    }
+};
+
+export const searchUsers = async (term: string) => {
+    try {
+		console.log("term received in api call: ", term);
+        const token = localStorage.getItem("jwtAuth");
+
+        const response = await axios.get(`${API}/search/${term}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+		console.log("response in searchUsers: ", response);
+
+        if (response.status === 200) {
+			console.log("la");
+			return response.data || [];
+        } else {
+			console.log("merde")
+            return (response.data.message);
+        }
+    } catch (error: any) {
+        console.error("Error fetching user by ID:", error.message);
         return error;
     }
 };

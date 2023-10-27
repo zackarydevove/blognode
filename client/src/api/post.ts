@@ -6,9 +6,6 @@ export const createPost = async (userId: number, content: string) => {
     try {
         const token = localStorage.getItem("jwtAuth");
 
-		console.log("userId in createPost: ", userId);
-		console.log("content in createPost: ", content);
-
         const response = await axios.post(API, {
             userId,
             content
@@ -18,8 +15,6 @@ export const createPost = async (userId: number, content: string) => {
             }
         });
         
-		console.log("response in createPost: ", response);
-
         if (response.status === 200 && response.data) {
             return response.data;
         } else {
@@ -139,10 +134,11 @@ export const deleteComment = async (userId: number, commentId: number) => {
     try {
         const token = localStorage.getItem("jwtAuth");
 
-        const response = await axios.post(API + "/comment", {
-            userId,
-			commentId
-        }, {
+        const response = await axios.delete(API + "/comment", {
+            params: {
+                userId,
+				commentId
+            },
             headers: {
                 Authorization: `Bearer ${token}`
             }

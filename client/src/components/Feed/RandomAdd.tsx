@@ -1,16 +1,36 @@
-import React from 'react'
-import UserBar from './UserBar'
+import React, { useEffect, useState } from 'react';
+import UserBar from './UserBar';
+import { getThreeRandomUsers } from '../../api/user';
+import { useUser } from '../../context/UserContext';
 
 const RandomAdd: React.FC = () => {
-  return (
-	<div className='flex flex-col justify-between bg-[#191819] w-full rounded-xl p-5'>
-		<p className='text-[#cac9ca] ml-2 '>Recommendation</p>
-		<div className='flex flex-col gap-4 py-2 mt-2'>
-			<UserBar user={null}/>
-			<UserBar user={null}/>
-		</div>
-	</div>
-  )
+    const [randomUsers, setRandomUsers] = useState([]);
+    const user = useUser();
+
+    useEffect(() => {
+        const fetchThreeRandomUsers = async () => {
+            if (!user) return;
+            const res = await getThreeRandomUsers(user.id);
+            setRandomUsers(res);
+        }
+
+        fetchThreeRandomUsers();
+    }, [user]);
+
+    return (
+        <div className='sticky top-[87px] z-50 flex flex-col justify-between bg-white dark:bg-[#191819] w-full rounded-xl p-5'>
+            <p className='text-black dark:text-white ml-2 '>Recommendation</p>
+            <div className='flex flex-col gap-4 py-2 mt-2'>
+                {
+                    randomUsers.length > 0 ? (
+                        randomUsers.map((randomUser, key) => (
+                            <UserBar key={key} user={randomUser} />
+                        ))
+                    ) : null
+                }
+            </div>
+        </div>
+    )
 }
 
-export default RandomAdd
+export default RandomAdd;

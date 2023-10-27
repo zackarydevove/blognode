@@ -11,7 +11,6 @@ const SignupPage: React.FC = () => {
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log("hey");
 		try {
 			const token = await register(email, password, confirmPassword, username);
 			if (token === "Incorrect email or password" || token === "Failed to login.") {
@@ -19,7 +18,6 @@ const SignupPage: React.FC = () => {
 			}
 			localStorage.setItem("jwtAuth", token);
 			navigate('/feed');
-			console.log("res:", token);
 		} catch (err) {
 			console.log(err);
 		}
@@ -32,7 +30,7 @@ const SignupPage: React.FC = () => {
 	}, [navigate]);
 
   return (
-	<div className='flex justify-center items-center h-screen bg-[#f8f9fa] relative'>
+	<div className='flex justify-center items-center h-screen bg-white relative'>
 		<div className='flex flex-col w-[500px]'>
 			<h1 className='text-lg text-[#3e5fd9] font-bold mb-5'>Sign up</h1>
 			<form className='flex flex-col gap-5' onSubmit={handleSubmit}>

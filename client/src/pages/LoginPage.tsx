@@ -16,7 +16,6 @@ const LoginPage: React.FC = () => {
 			}
 			localStorage.setItem("jwtAuth", token);
 			navigate('/feed');
-			console.log("token:", token);
 		} catch (err) {
 			console.log(err);
 		}
@@ -29,7 +28,7 @@ const LoginPage: React.FC = () => {
 	}, [navigate]);
 
   return (
-	<div className='flex justify-center items-center h-screen bg-[#f8f9fa] relative'>
+	<div className='flex justify-center items-center h-screen bg-white relative'>
 		<div className='flex flex-col w-[500px]'>
 			<h1 className='text-lg text-[#3e5fd9] font-bold mb-5'>Login</h1>
 			<form className='flex flex-col gap-5'
