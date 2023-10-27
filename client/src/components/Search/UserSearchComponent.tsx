@@ -16,7 +16,7 @@ const UserSearchComponent: React.FC<UserSearchComponentProps> = ({ user }) =>  {
 		</div>
 		<div className='flex-1 flex flex-col gap-1 text-white'>
 			<p className=''>{user.username}</p>
-			<p className='text-sm text-[#525353]'>Software Engineer</p>
+			<p className='text-sm text-[#525353]'>{user.job}</p>
 		</div>
 	</div>
   )

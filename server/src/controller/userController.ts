@@ -247,8 +247,6 @@ export const searchUsers = async (req: Request, res: Response) => {
 	try {
 		const searchTerm = req.params.term;
 
-		console.log("searchTerm: ", searchTerm);
-
 		if (!searchTerm || searchTerm.length === 0) {
 			return res.status(400).json({ message: "Search term is required." });
 		}
@@ -275,3 +273,54 @@ export const searchUsers = async (req: Request, res: Response) => {
 		return res.status(500).json({ message: "Internal server error." });
 	}
 };
+
+interface UpdateUserDetailsRequest {
+    userId: number;
+    username?: string;
+    location?: string;
+    job?: string;
+}
+
+export const updateUserDetails = async (req: Request<{}, {}, UpdateUserDetailsRequest>, res: Response) => {
+    try {
+        const { userId, username, location, job } = req.body;
+
+        if (!userId) {
+            return res.status(400).json({ message: "User ID is required" });
+        }
+
+        if (username && !validateName(username)) {
+            return res.status(400).json({ message: "Invalid username format" });
+        }
+
+        const existingUser = await prisma.user.findFirst({
+            where: { id: userId }
+        });
+
+        if (!existingUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+		const usernameTaken = await prisma.user.findFirst({
+			where: { username: username }
+		})
+
+		if (usernameTaken) {
+            return res.status(404).json({ message: "Username already taken" });
+		}
+
+        const updatedUser = await prisma.user.update({
+            where: { id: userId },
+            data: {
+                username: username ?? existingUser.username,
+                location: location ?? existingUser.location,
+                job: job ?? existingUser.job
+            }
+        });
+
+        return res.status(200).json({ data: updatedUser, message: "User details updated successfully" });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+}

@@ -4,6 +4,8 @@ interface UserInterface {
 	password: string;
 	username: string;
 	followersCount: number;
+	location: string;
+	job: string;
 	followers: FollowInterface[];
 	following: FollowInterface[];
 	posts: PostInterface[];

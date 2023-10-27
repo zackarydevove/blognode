@@ -58,7 +58,7 @@ const Post: React.FC<{ post: any }> = ({ post }) => {
 					<div className='h-12 w-12 bg-black rounded-full hover:cursor-pointer' onClick={() => navigate(`/profile/${post.creator.username}`)}/>
 					<div>
 						<p className='text-black dark:text-white'>{post.creator.username}</p>
-						<p className='text-xs text-[#5e5d5e]'>Software Engineer</p>
+						<p className='text-xs text-[#5e5d5e]'>{post.creator.job}</p>
 					</div>
 				</div>
 				<div>

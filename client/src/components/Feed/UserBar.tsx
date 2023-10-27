@@ -46,7 +46,7 @@ const UserBar: React.FC<UserBarProps> = ({ user }) => {
                 <div className='h-12 w-12 bg-black rounded-full hover:cursor-pointer' onClick={() => navigate(`/profile/${user.username}`)}/>
                 <div>
                     <p className='text-black dark:text-white'>{user.username}</p>
-                    <p className='text-xs text-[#5e5d5e]'>Software Engineer</p>
+                    <p className='text-xs text-[#5e5d5e]'>{user.job}</p>
                 </div>
             </div>
 			<div>
@@ -54,7 +54,7 @@ const UserBar: React.FC<UserBarProps> = ({ user }) => {
 					{
 						currentUserIsFollowing ? 
 						<button 
-							className='border border-black dark:border-white text-black dark:text-white color-black px-6 py-2 rounded-full hover:border-red-500 hover:text-red-500 transition'
+							className='border border-black dark:border-white text-black dark:text-white color-black px-6 py-2 rounded-full hover:border-red-500 hover:text-red-500 dark:hover:border-red-500 dark:hover:text-red-500 transition'
 							onClick={handleFollow}>
 							UNFOLLOW
 						</button>

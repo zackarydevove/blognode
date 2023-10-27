@@ -50,7 +50,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ post }) => {
 					placeholder="What's on your mind... ?"
 					value={content}
 					onChange={(e) => setContent(e.target.value)}/>
-				<BiSolidSend className='self-end mb-3 text-[#ece7ec]'
+				<BiSolidSend className='self-end mb-3 text-black dark:text-white'
 					onClick={handleCommentPost}/>
 			</div>
 			

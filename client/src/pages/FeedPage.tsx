@@ -7,7 +7,7 @@ import FeedProfileInfo from '../components/Feed/FeedProfileInfo'
 
 const FeedPage: React.FC = () => {
 	return (
-		<div className='w-full flex flex-col bg-[#f4f3f4] dark:bg-[#0e0c0e]'>
+		<div className='w-full min-h-screen flex flex-col bg-[#f4f3f4] dark:bg-[#0e0c0e]'>
 			<Navbar />
 			<div className='flex h-full pt-8 px-24 gap-12 '>
 				<div className='w-[450px] max-lg:hidden'>

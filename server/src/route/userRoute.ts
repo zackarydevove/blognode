@@ -7,7 +7,8 @@ import { getUserByEmail,
 	getThreeRandomUsers, 
 	changeUsername,
 	changePassword,
-	searchUsers
+	searchUsers,
+	updateUserDetails
 } from "../controller/userController";
 import { jwtCheck } from "../middleware/jwtCheck";
 
@@ -22,5 +23,6 @@ router.get("/random/:id", jwtCheck, getThreeRandomUsers);
 router.patch("/username", jwtCheck, changeUsername);
 router.patch("/password", jwtCheck, changePassword);
 router.get("/search/:term", jwtCheck, searchUsers);
+router.put('/update', updateUserDetails);
 
 export default router;

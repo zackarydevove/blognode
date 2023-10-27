@@ -56,10 +56,10 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({ profile }) => {
 			<div>
 				{
 					user.username === profile.username 
-					? <BsPersonFillGear size={"1.4em"} className='text-white hover:cursor-pointer' />
+					? <BsPersonFillGear size={"1.4em"} className='text-black dark:text-white hover:cursor-pointer' />
 					: ( userFollowProfile 
-						? <BsPersonFillDash size={"1.4em"} className='text-white hover:cursor-pointer' onClick={handleFollow}/>
-						: <BsPersonFillAdd size={"1.4em"} className='text-white hover:cursor-pointer' onClick={handleFollow}/>
+						? <BsPersonFillDash size={"1.4em"} className='text-black dark:text-white hover:cursor-pointer' onClick={handleFollow}/>
+						: <BsPersonFillAdd size={"1.4em"} className='text-black dark:text-white hover:cursor-pointer' onClick={handleFollow}/>
 					  )
 				}
 			</div>
@@ -68,11 +68,11 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({ profile }) => {
 		<div className='flex flex-col gap-4 ml-2'>
 			<div className='flex gap-2 items-center'>
 				<MdOutlineLocationOn size={'1.3em'}/>
-				<p className='text-sm text-[#5e5d5e]'>Paris, France</p>
+				<p className='text-sm text-[#5e5d5e]'>{profile.location}</p>
 			</div>
 			<div className='flex gap-2 items-center'>
 				<BsBriefcase size={'1.2em'}/>
-				<p className='text-sm text-[#5e5d5e]'>Software Engineer</p>
+				<p className='text-sm text-[#5e5d5e]'>{profile.job}</p>
 			</div>
 		</div>
 	</div>
