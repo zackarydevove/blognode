@@ -40,6 +40,15 @@ export const getFeed = async (req: Request, res: Response) => {
             },
 			include: {
 				creator: true,
+				comments: {
+					take: 1,
+					orderBy: {
+						createdAt: 'desc'
+					},
+					include: {
+						user: true
+					}
+				}
 			}
         });
 
@@ -73,6 +82,15 @@ export const getUserPosts = async (req: Request, res: Response) => {
             },
 			include: {
 				creator: true,
+				comments: {
+					take: 1,
+					orderBy: {
+						createdAt: 'desc'
+					},
+					include: {
+						user: true
+					}
+				}
 			}
         });
         return res.status(200).json(posts);

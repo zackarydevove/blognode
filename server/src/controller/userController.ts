@@ -242,3 +242,36 @@ export const changePassword = async (req: Request<{}, {}, ChangePasswordRequest>
 		return res.status(500).json({ message: "Internal server error" });
 	}
 }
+
+export const searchUsers = async (req: Request, res: Response) => {
+	try {
+		const searchTerm = req.params.term;
+
+		console.log("searchTerm: ", searchTerm);
+
+		if (!searchTerm || searchTerm.length === 0) {
+			return res.status(400).json({ message: "Search term is required." });
+		}
+
+		// Search for users where username starts with, ends with, or contains the search term
+		const users = await prisma.user.findMany({
+			where: {
+				OR: [
+					{ username: { startsWith: searchTerm } },
+					{ username: { contains: searchTerm } },
+					{ username: { endsWith: searchTerm } }
+				]
+			},
+			take: 10  // Limit to 10 users
+		});
+
+		if (!users || users.length === 0) {
+			return res.status(200).json({ message: "No users found." });
+		}
+
+		return res.status(200).json(users);
+	} catch (err) {
+		console.log(err);
+		return res.status(500).json({ message: "Internal server error." });
+	}
+};

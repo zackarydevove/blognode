@@ -11,8 +11,6 @@ export const followUser = async (req: Request<{}, {}, FollowUserRequest>, res: R
 	try {
 		const { userId, targetId } = req.body;
 
-		console.log("Enter followUser\n");
-
 		if (!userId) {
 			return res.status(401).json({ message: "You are not authorized" });
 		}
@@ -27,8 +25,6 @@ export const followUser = async (req: Request<{}, {}, FollowUserRequest>, res: R
 			return res.status(404).json({ message: "Target user not found" });
 		}
 
-		console.log("userId: ", userId, "\ntarget: ", targetId, "\n");
-
         const existingFollow = await prisma.follow.findUnique({
             where: {
                 followerId_followingId: {
@@ -39,7 +35,6 @@ export const followUser = async (req: Request<{}, {}, FollowUserRequest>, res: R
         });
 
         if (existingFollow) {
-			console.log("existingFollow: ", existingFollow);
 			await prisma.follow.delete({
 				where: { id: existingFollow.id }
 			});
@@ -68,8 +63,6 @@ export const followUser = async (req: Request<{}, {}, FollowUserRequest>, res: R
             }
         });
 
-		console.log("new follow: ", newFollow);
-		
 		return res.status(200).json({ data: newFollow, message: "Followed successfully" });
 	} catch (err) {
 		console.log(err);
@@ -79,7 +72,6 @@ export const followUser = async (req: Request<{}, {}, FollowUserRequest>, res: R
 
 export const checkFollow = async (req: Request, res: Response) => {
     try {
-		console.log(req);
         const userId = parseInt(req.query.userId as string);
         const targetId = parseInt(req.query.targetId as string);
 

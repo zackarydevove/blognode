@@ -10,9 +10,6 @@ export const createPost = async (req: Request<{}, {}, CreatePostRequest>, res: R
 	try {
 		const { userId, content } = req.body;
 
-		console.log("userId in createPost: ", userId);
-		console.log("content in createPost: ", content);
-
 		if (!userId) {
 			return res.status(401).json({ message: "You are not authorized" });
 		}
@@ -23,8 +20,6 @@ export const createPost = async (req: Request<{}, {}, CreatePostRequest>, res: R
 				content: content,
 			}
 		})
-
-		console.log("newPost: ", newPost);
 
 		return res.status(200).json({ data: newPost, message: "New post created successfully" });
 	} catch (err) {
@@ -98,6 +93,8 @@ export const likePost = async (req: Request<{}, {}, LikePostRequest>, res: Respo
         });
 
         if (existingLike) {
+			await prisma.like.delete({ where: { id: existingLike.id }});
+
 			const updatedPost = await prisma.post.update({
 				where: { id: postId },
 				data: {
@@ -106,10 +103,10 @@ export const likePost = async (req: Request<{}, {}, LikePostRequest>, res: Respo
 					}
 				}
 			})
-			return res.status(200).json({ data: updatedPost, message: "You have unliked successfully" });
+			return res.status(200).json({ data: updatedPost, likeCount: -1, message: "You have unliked successfully" });
         }
 
-		const like = await prisma.like.create({
+		await prisma.like.create({
 			data: {
 				postId: postId,
 				userId: userId,
@@ -125,7 +122,42 @@ export const likePost = async (req: Request<{}, {}, LikePostRequest>, res: Respo
 			}
 		})
 
-		return res.status(200).json({ data: updatedPost, message: "You have liked successfully" });
+		return res.status(200).json({ data: updatedPost, likeCount: 1, message: "You have liked successfully" });
+	
+	} catch (err) {
+		console.log(err);
+		return res.status(500).json({ message: "Internal server error" });
+	}
+}
+
+
+export const checkUserLikedPost = async (req: Request, res: Response) => {
+	try {
+		const userId = parseInt(req.query.userId as string);
+		const postId = parseInt(req.query.postId as string);
+
+		if (!userId || !postId) {
+			return res.status(401).json({ message: "user and post ID are necessary" });
+		}
+
+		const post = await prisma.post.findFirst({
+			where: { id: postId }
+		})
+
+		if (!post) {
+			return res.status(404).json({ message: "Post not found" });
+		}
+
+        const existingLike = await prisma.like.findFirst({
+            where: {
+                postId: postId,
+                userId: userId
+            }
+        });
+
+		const userAlreadyLiked = existingLike ? true : false
+
+		return res.status(200).json({ data: userAlreadyLiked, message: "You have liked successfully" });
 	
 	} catch (err) {
 		console.log(err);
@@ -166,7 +198,16 @@ export const commentPost = async (req: Request<{}, {}, CommentPostRequest>, res:
             }
         });
 
-        return res.status(200).json({ data: newComment, message: "Comment posted successfully" });
+		const updatedPost = await prisma.post.update({
+			where: { id: postId },
+			data: {
+				commentsCount: {
+					increment: 1
+				}
+			}
+		})
+
+        return res.status(200).json({ data: newComment, commentCount: 1, message: "Comment posted successfully" });
 
     } catch (err) {
         console.log(err);
@@ -181,7 +222,8 @@ interface DeleteCommentRequest {
 
 export const deleteComment = async (req: Request<{}, {}, DeleteCommentRequest>, res: Response) => {
     try {
-        const { userId, commentId } = req.body;
+        const userId = parseInt(req.query.userId as string);
+        const commentId = parseInt(req.query.commentId as string);
 
         // Check if user is authorized
         if (!userId) {
@@ -207,7 +249,16 @@ export const deleteComment = async (req: Request<{}, {}, DeleteCommentRequest>, 
             where: { id: commentId }
         });
 
-        return res.status(200).json({ message: "Comment has been deleted successfully" });
+		const updatedPost = await prisma.post.update({
+			where: { id: comment.postId },
+			data: {
+				commentsCount: {
+					decrement: 1
+				}
+			}
+		})
+
+        return res.status(200).json({ commentCount: -1, message: "Comment has been deleted successfully" });
 
     } catch (err) {
         console.log(err);

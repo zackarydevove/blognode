@@ -39,6 +39,7 @@ model Post {
   createdAt  DateTime  @default(now())
   likesCount Int       @default(0)
   likes      Like[]    @relation("postLikes")
+  commentsCount Int		@default(0)
   comments   Comment[] @relation("postComments")
 }
 
