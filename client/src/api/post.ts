@@ -155,3 +155,29 @@ export const deleteComment = async (userId: number, commentId: number) => {
         return (errorMessage);
     }
 }
+
+
+export const getPostComments = async (postId: number) => {
+    try {
+        const token = localStorage.getItem("jwtAuth");
+
+        const response = await axios.get(API + "/commentsss", {
+            params: {
+				postId
+            },
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        
+        if (response.status === 200 && response.data) {
+            return response.data.data;
+        } else {
+            return (response.data.message || "Failed to follow user.");
+        }
+    } catch (error: any) {
+        const errorMessage = error.response && error.response.data.message ? error.response.data.message : error.message;
+        console.error("Error following user:", errorMessage);
+        return (errorMessage);
+    }
+}

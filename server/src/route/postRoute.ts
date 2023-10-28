@@ -4,7 +4,8 @@ import { createPost,
 	likePost, 
 	checkUserLikedPost,
 	commentPost, 
-	deleteComment
+	deleteComment,
+	getPostComments
 } from "../controller/postController";
 import { jwtCheck } from '../middleware/jwtCheck';
 
@@ -16,5 +17,6 @@ router.post("/like", jwtCheck, likePost);
 router.get("/like", jwtCheck, checkUserLikedPost);
 router.post("/comment", jwtCheck, commentPost);
 router.delete("/comment", jwtCheck, deleteComment);
+router.get("/commentsss", jwtCheck, getPostComments);
 
 export default router;

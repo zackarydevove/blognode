@@ -41,7 +41,7 @@ const FeedProfileInfo: React.FC = () => {
     const handleClick = isEditMode ? handleSaveChanges : () => setIsEditMode(true);
 
 	return (
-		<div className='sticky top-[87px] z-50 bg-white dark:bg-[#191819] w-full rounded-xl p-5 text-black dark:text-white'>
+		<div className='sticky top-[87px] z-20 bg-white dark:bg-[#191819] w-full rounded-xl p-5 text-black dark:text-white'>
 			<div className='flex items-center '>
 				<div className='flex items-center gap-4 flex-1'>
 					<div className='h-14 w-14 bg-black rounded-full hover:cursor-pointer'

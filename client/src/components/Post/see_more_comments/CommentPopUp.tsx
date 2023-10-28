@@ -3,15 +3,12 @@ import { BsThreeDots } from 'react-icons/bs';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { BiComment } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
-import { checkUserLikedPost, deletePost, likePost } from '../../api/post';
-import { useUser } from '../../context/UserContext';
-import CommentSection from '../Post/CommentSection';
-import OptionsDropdown from '../General/OptionsDropdown';
-import SeeMoreComments from '../Post/see_more_comments/SeeMoreComments';
-import { PostInterface } from '../../interface/UserInterface';
+import { checkUserLikedPost, deletePost, likePost } from '../../../api/post';
+import { useUser } from '../../../context/UserContext';
+import CommentSectionPopUp from './CommentSectionPopUp';
+import OptionsDropdown from '../../General/OptionsDropdown';
 
-const Post: React.FC<{ post: PostInterface }> = ({ post }) => {
-	const [seeMoreComments, setSeeMoreComments] = useState(false);
+const CommentPopUp: React.FC<{ post: any }> = ({ post }) => {
 	const [showDropdown, setShowDropdown] = useState(false);
 	const [userLikedPost, setUserLikedPost] = useState(false);
 	const [likesCount, setLikesCount] = useState<number>(post.likesCount);
@@ -56,10 +53,6 @@ const Post: React.FC<{ post: PostInterface }> = ({ post }) => {
 
 	return (
         <div className='p-4 flex flex-col gap-4'>
-			{
-				seeMoreComments ? <SeeMoreComments post={post} setSeeMoreComments={setSeeMoreComments}/> : null
-			}
-
 			<div className='w-full flex'>
 				<div className='flex items-center gap-4 flex-1'>
 					<div className='h-12 w-12 bg-black rounded-full hover:cursor-pointer' onClick={() => navigate(`/profile/${post.creator.username}`)}/>
@@ -78,7 +71,7 @@ const Post: React.FC<{ post: PostInterface }> = ({ post }) => {
             <p className='text-black dark:text-white'>{post.content}</p>
 			<hr className='border-[#e2dee3]'/>
 			<div className='flex justify-evenly text-[#3f3e3f] gap-12'>
-				<div className='flex items-center gap-3 hover:cursor-pointer hover:text-[#646264] transition'
+				<div className='flex items-center gap-3 hover:cursor-pointer hover:text-[#646264]'
 					onClick={handleLike}>
 						{
 							userLikedPost ?
@@ -98,10 +91,10 @@ const Post: React.FC<{ post: PostInterface }> = ({ post }) => {
 				</div> */}
 			</div>
 			<hr className='border-[#e2dee3]'/>
-			<CommentSection post={post} setSeeMoreComments={setSeeMoreComments}/>
+			<CommentSectionPopUp post={post}/>
 		
         </div>
     )
 }
 
-export default Post
+export default CommentPopUp

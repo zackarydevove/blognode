@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { BiSolidMoon } from 'react-icons/bi'
 import { BsFillChatLeftTextFill, BsFillBellFill, BsFillArrowUpRightCircleFill } from 'react-icons/bs'
 import { AiOutlineSearch } from 'react-icons/ai'
+import { GiHamburgerMenu } from 'react-icons/gi'
 import { useNavigate } from 'react-router-dom'
 import SearchDropdown from '../Search/SearchDropdown'
 import { UserInterface } from '../../interface/UserInterface'
@@ -46,13 +47,16 @@ const Navbar: React.FC = () => {
 	}
 
   return (
-		<div className='sticky top-0 z-50 bg-white dark:bg-[#191819] flex justify-between px-24 py-2'>
+		<div className='sticky top-0 z-30 bg-white dark:bg-[#191819] flex justify-between px-6 max-sm:gap-3 sm:px-24 py-2'>
 			<div className='flex items-center'>
-				<div className='h-3/4 w-[200px] bg-brand_name bg-no-repeat bg-contain'
+				<div className='h-3/4 lg:w-[200px] sm:w-[100px] w-[50px] bg-brand_name bg-no-repeat bg-contain'
 					onClick={() => navigate('/feed')}/>
-				<div className='relative flex justify-center items-center bg-[#eeedef] dark:bg-[#2e2d2e] h-10 rounded-2xl px-4'>
+			</div>
+
+			<div className='flex items-center'>
+				<div className='relative flex justify-center items-center bg-[#eeedef] dark:bg-[#2e2d2e] h-10 rounded-2xl px-4 w-full'>
 					<input 
-						className='bg-[#eeedef] dark:bg-[#2e2d2e] outline-none text-black dark:text-white' 
+						className='bg-[#eeedef] dark:bg-[#2e2d2e] outline-none text-black dark:text-white max-sm:w-3/4' 
 						placeholder='Search...'
 						value={searchTerm}
 						onChange={(e) => setSearchTerm(e.target.value)}
@@ -63,11 +67,25 @@ const Navbar: React.FC = () => {
       				{showDropdown && <SearchDropdown users={users} />}
 				</div>
 			</div>
-			<div className='text-black dark:text-white flex gap-10 items-center'>
-				<BiSolidMoon size={'1.2em'} onClick={() => dispatch(toggleDarkMode())} />
-				<BsFillChatLeftTextFill size={'1.2em'} />
-				<BsFillBellFill size={'1.2em'} />
-				<BsFillArrowUpRightCircleFill className="hover:cursor-pointer" onClick={handleLogout} size={'1.2em'}/>
+
+			<div className='text-black dark:text-white flex items-center lg:hidden'>
+				<GiHamburgerMenu size={'1.2em'} className='z-20'/>
+			</div>
+
+			<div className='text-black dark:text-white flex gap-10 items-center max-lg:hidden'>
+				<div className='h-8 w-8 flex justify-center items-center rounded-full hover:bg-[#eeedef] dark:hover:bg-[#2e2d2e] hover:cursor-pointer transition'
+				 	onClick={() => dispatch(toggleDarkMode())}>
+					<BiSolidMoon size={'1.2em'} className='z-20'/>
+				</div>
+				<div className='h-8 w-8 flex justify-center items-center rounded-full hover:bg-[#eeedef] dark:hover:bg-[#2e2d2e] hover:cursor-pointer transition'>
+					<BsFillChatLeftTextFill size={'1.1em'} />
+				</div>
+				<div className='h-8 w-8 flex justify-center items-center rounded-full hover:bg-[#eeedef] dark:hover:bg-[#2e2d2e] hover:cursor-pointer transition'>
+					<BsFillBellFill size={'1.2em'} />
+				</div>
+				<div className='h-8 w-8 flex justify-center items-center rounded-full hover:bg-[#eeedef] dark:hover:bg-[#2e2d2e] hover:cursor-pointer transition'>
+					<BsFillArrowUpRightCircleFill className="hover:cursor-pointer" onClick={handleLogout} size={'1.2em'}/>
+				</div>
 			</div>
 		</div>
   )

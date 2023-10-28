@@ -7,9 +7,10 @@ import { PostInterface } from '../../interface/UserInterface';
 
 interface CommentSectionProps {
 	post: PostInterface,
+	setSeeMoreComments: any
 }
 
-const CommentSection: React.FC<CommentSectionProps> = ({ post }) => {
+const CommentSection: React.FC<CommentSectionProps> = ({ post, setSeeMoreComments }) => {
     const [content, setContent] = useState<string>('');
 	const user = useUser();
 
@@ -35,7 +36,8 @@ const CommentSection: React.FC<CommentSectionProps> = ({ post }) => {
 			post.comments.length > 0 && post.comments[0] ?
 				<div className='flex flex-col gap-2'>
 					<div>
-						<p className='text-black dark:text-white text-sm hover:cursor-pointer hover:underline hover:text-[#646264]'>See more comments</p>
+						<p className='text-black dark:text-white text-sm hover:cursor-pointer hover:underline hover:text-[#646264] transition'
+							onClick={() => setSeeMoreComments(true)}>See more comments</p>
 					</div>
 					<div>
 						<Comment comment={post.comments[0] || null} />
@@ -44,8 +46,8 @@ const CommentSection: React.FC<CommentSectionProps> = ({ post }) => {
 			: null
 		}
 		<div className='flex w-full gap-2'>
-			<div className='h-9 w-9	rounded-full bg-black'/>
-			<div className='flex w-full rounded-2xl bg-[#eeedef] dark:bg-[#2e2d2e] px-6 pt-3 '>
+			<div className='h-9 w-9	rounded-full bg-black flex-shrink-0'/>
+			<div className='flex flex-1 max-w-full rounded-2xl bg-[#eeedef] dark:bg-[#2e2d2e] px-6 pt-3 '>
 				<textarea className='flex-1 bg-[#eeedef] dark:bg-[#2e2d2e] p-1 outline-none resize-none hide-scrollbar text-black dark:text-white'
 					placeholder="What's on your mind... ?"
 					value={content}

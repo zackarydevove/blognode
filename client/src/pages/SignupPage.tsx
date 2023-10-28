@@ -82,7 +82,7 @@ const SignupPage: React.FC = () => {
 		</div>
 		<div className='absolute bottom-12 right-12 w-[500px] h-[500px] bg-home_img1 bg-no-repeat bg-center'/>
 		<div className='absolute bottom-12 left-12 w-[500px] h-[500px] bg-home_img2 bg-no-repeat bg-center'/>
-		<div className='absolute top-12 left-1/2 -translate-x-1/2 w-[200px] h-[200px] bg-brand_name bg-no-repeat bg-center'/>
+		<div className='absolute top-12 left-1/2 -translate-x-1/2 w-[324px] h-[200px] bg-brand_name bg-no-repeat bg-center'/>
 	</div>
   )
 }

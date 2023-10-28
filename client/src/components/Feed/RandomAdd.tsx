@@ -18,7 +18,7 @@ const RandomAdd: React.FC = () => {
     }, [user]);
 
     return (
-        <div className='sticky top-[87px] z-50 flex flex-col justify-between bg-white dark:bg-[#191819] w-full rounded-xl p-5'>
+        <div className='sticky top-[87px] z-20 flex flex-col justify-between bg-white dark:bg-[#191819] w-full rounded-xl p-5'>
             <p className='text-black dark:text-white ml-2 '>Recommendation</p>
             <div className='flex flex-col gap-4 py-2 mt-2'>
                 {

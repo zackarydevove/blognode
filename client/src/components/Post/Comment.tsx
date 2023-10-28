@@ -4,6 +4,7 @@ import { BsThreeDots } from 'react-icons/bs'
 import { deleteComment } from '../../api/post'
 import { useUser } from '../../context/UserContext'
 import OptionsDropdown from '../General/OptionsDropdown'
+import { getTimePassed } from '../../utils/convertTime'
 
 interface CommentProps {
 	comment: CommentInterface | null
@@ -48,7 +49,7 @@ const Comment: React.FC<CommentProps> = ({ comment = null}) => {
 				<p className='hover:cursor-pointer hover:underline'>Like</p>
 				<p className='hover:cursor-pointer hover:underline'>Comment</p>
 				{/* <p className='hover:cursor-pointer hover:underline'>Share</p> */}
-				<p>1h</p>
+				<p>{getTimePassed(new Date(comment.createdAt))}</p>
 			</div>
 
 		</div>

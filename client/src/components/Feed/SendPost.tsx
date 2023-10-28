@@ -36,18 +36,18 @@ const SendPost: React.FC = () => {
 			</div>
 		</div>
 		<hr className='border-[#e2dee3] my-4'/>
-		<div className='flex gap-12 justify-center items-center text-[#eeedef] dark:text-[#2e2d2e]'>
+		<div className='flex max-[380px]:gap-4 gap-12 justify-center items-center text-[#eeedef] dark:text-[#2e2d2e]'>
 			<div className='flex gap-3'>
 				<BsCardImage size={'1.5em'}/>
-				<p>Image</p>
+				<p className='max-sm:hidden'>Image</p>
 			</div>
 			<div className='flex gap-3'>
 			<AiOutlineFileGif size={'1.7em'}/>
-				<p>GIF</p>
+				<p className='max-sm:hidden'>GIF</p>
 			</div>
 			<div className='flex gap-3'>
 			<IoIosAttach size={'1.7em'}/>
-				<p>File</p>
+				<p className='max-sm:hidden'>File</p>
 			</div>
 			<button className='bg-black dark:bg-white text-white dark:text-black border border-black dark:border-white hover:bg-white hover:text-black hover:border-black dark:hover:bg-[#191819] dark:hover:text-white dark:hover:border-white rounded-full px-6 py-2' onClick={handleCreatePost}>POST</button>
 		</div>
