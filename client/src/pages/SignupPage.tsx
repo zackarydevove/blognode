@@ -13,7 +13,7 @@ const SignupPage: React.FC = () => {
 		e.preventDefault();
 		try {
 			const token = await register(email, password, confirmPassword, username);
-			if (token === "Incorrect email or password" || token === "Failed to login.") {
+			if (token === "Passwords doesn't match" || token === "Email already used") {
 				return ;
 			}
 			localStorage.setItem("jwtAuth", token);

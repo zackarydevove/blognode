@@ -9,7 +9,7 @@ jest.mock('react-router-dom', () => ({
 	useNavigate: jest.fn(),
 }));
   
-  jest.mock('../../api/auth', () => ({
+jest.mock('../../api/auth', () => ({
 	login: jest.fn(),
 }));
 
@@ -22,7 +22,7 @@ beforeEach(() => {
 });
 
 
-test('renders login form', () => {
+test('renders login form correctly', () => {
 	render(<LoginPage />);
   
 	const emailInput = screen.getByPlaceholderText('Email');
