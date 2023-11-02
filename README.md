@@ -59,4 +59,4 @@ To get started with the development environment:
 Pull requests are welcome. Please ensure that any new feature or bug fix is covered by tests. \
 
 <h1>Feedback & Support </h1>
-For any queries or feedback, please raise an issue in the repository.
+For any queries or feedback, please raise an issue in the repository
