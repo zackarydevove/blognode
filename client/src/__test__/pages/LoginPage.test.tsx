@@ -62,7 +62,6 @@ test('handles successful login', async () => {
 	fireEvent.change(passwordInput, { target: { value: '123456' } });
 	fireEvent.click(signInButton);
   
-	// Await any async operations (like the login call)
 	await waitFor(() => {
 	  expect(localStorage.getItem('jwtAuth')).toBe('mock_token');
 	  expect(mockNavigate).toHaveBeenCalledWith('/feed');
