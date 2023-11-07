@@ -21,7 +21,7 @@ const ProfileFeed: React.FC<ProfileFeedProps> = ({ profile }) => {
         fetchPosts();
     }, [profile]);
 
-    if (!user) {
+    if (!user || !profile) {
         return <p>loading...</p>
     }
 

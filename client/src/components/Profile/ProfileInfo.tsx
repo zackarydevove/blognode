@@ -56,10 +56,10 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({ profile }) => {
 			<div>
 				{
 					user.username === profile.username 
-					? <BsPersonFillGear size={"1.4em"} className='text-black dark:text-white hover:cursor-pointer' />
+					? <BsPersonFillGear size={"1.4em"} className='text-black dark:text-white hover:cursor-pointer' data-testid="settings-icon"/>
 					: ( userFollowProfile 
-						? <BsPersonFillDash size={"1.4em"} className='text-black dark:text-white hover:cursor-pointer' onClick={handleFollow}/>
-						: <BsPersonFillAdd size={"1.4em"} className='text-black dark:text-white hover:cursor-pointer' onClick={handleFollow}/>
+						? <BsPersonFillDash size={"1.4em"} className='text-black dark:text-white hover:cursor-pointer' onClick={handleFollow}  data-testid="unfollow-icon"/>
+						: <BsPersonFillAdd size={"1.4em"} className='text-black dark:text-white hover:cursor-pointer' onClick={handleFollow}  data-testid="follow-icon"/>
 					  )
 				}
 			</div>
